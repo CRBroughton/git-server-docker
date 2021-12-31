@@ -15,7 +15,7 @@ fi
 if [ "$(ls -A /git-server/repos/)" ]; then
   cd /git-server/repos
   chown -R git:git .
-  chmod -R ug+rwX .
+  chmod 700 .
   find . -type d -exec chmod g+s '{}' +
 fi
 
