@@ -1,6 +1,7 @@
 FROM alpine:3.4
 
-MAINTAINER Carlos Bernárdez "carlos@z4studios.com"
+LABEL author="Carlos Bernárdez"
+LABEL author.email="carlos@z4studios.com"
 
 # "--no-cache" is new in Alpine 3.3 and it avoid using
 # "--update + rm -rf /var/cache/apk/*" (to remove cache)
