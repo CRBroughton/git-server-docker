@@ -1,4 +1,4 @@
-FROM alpine:3.4
+FROM alpine:3.15.0
 
 LABEL author="Carlos Bernárdez"
 LABEL author.email="carlos@z4studios.com"
