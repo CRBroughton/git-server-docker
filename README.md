@@ -38,7 +38,7 @@ Which should output:
 To create a bare repositiores, do the following:
 
 	docker exec -it git-server /bin/sh
-	cd repos && mkdir <REPO_NAME>.git && cd <REPO_NAME.git && git init --bare
+	cd repos && mkdir <REPO_NAME>.git && cd <REPO_NAME>.git && git init --bare
 
 Once created, you'll now be able to clone the repository
 from your server:
