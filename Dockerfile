@@ -1,14 +1,10 @@
 FROM alpine:3.15.0
 
-LABEL author="Carlos Bernárdez"
-LABEL author.email="carlos@z4studios.com"
+LABEL author="Craig Broughton"
+LABEL author.email="CRBroughton@posteo.uk"
 
-# "--no-cache" is new in Alpine 3.3 and it avoid using
-# "--update + rm -rf /var/cache/apk/*" (to remove cache)
 RUN apk add --no-cache \
-# openssh=7.2_p2-r1 \
   openssh \
-# git=2.8.3-r0
   git
 
 # Key generation on the server
