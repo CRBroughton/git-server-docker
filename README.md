@@ -20,7 +20,7 @@ Then run the container with `docker-compose`:
 You can now find your git-server folder at `~/git-server`.
 Place your public key in `~/git-server/keys` and then restart the container with:
 
-	docker-compose up -d
+	docker-compose restart
 
 To check that your git server is running, run the below command:
 
