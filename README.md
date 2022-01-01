@@ -3,74 +3,57 @@ A lightweight Git Server Docker image built with Alpine Linux. Available on [Git
 
 !["image git server docker" "git server docker"](https://raw.githubusercontent.com/jkarlosb/git-server-docker/master/git-server-docker.jpg)
 
-### Basic Usage
+## Basic Usage
 
-How to run the container in port 2222 with two volumes: keys volume for public keys and repos volume for git repositories:
+This repository reles on `docker-compose`. First build your image(s):
 
-	$ docker run -d -p 2222:22 -v ~/git-server/keys:/git-server/keys -v ~/git-server/repos:/git-server/repos jkarlos/git-server-docker
+	docker build -t crbroughton/git-server .
 
-How to use a public key:
+Note that the `docker-compose.yml` file includes `emarcs/nginx-cgit`, a
+git front-end that run on port 8000 by default. If you don't require a
+git front-end, simply remove this portion from the `docker-compose.yml` file.
 
-    Copy them to keys folder: 
-	- From host: $ cp ~/.ssh/id_rsa.pub ~/git-server/keys
-	- From remote: $ scp ~/.ssh/id_rsa.pub user@host:~/git-server/keys
-	You need restart the container when keys are updated:
-	$ docker restart <container-id>
-	
-How to check that container works (you must to have a key):
+Then run the container with `docker-compose`:
 
-	$ ssh git@<ip-docker-server> -p 2222
+	docker-compose up -d
+
+You can now find your git-server folder at `~/git-server`.
+Place your public key in `~/git-server/keys` and then restart the container with:
+
+	docker-compose up -d
+
+To check that your git server is running, run the below command:
+
+	ssh git@<ip-docker-server> -p 2222
+
+Which should output:
+
+	Welcome to your dockerised git server!
+	You've successfully authenticated!
+
 	...
-	Welcome to git-server-docker!
-	You've successfully authenticated, but I do not
-	provide interactive shell access.
-	...
 
-How to create a new repo:
+## Creating Bare Repositories
 
-	$ cd myrepo
-	$ git init --shared=true
-	$ git add .
-	$ git commit -m "my first commit"
-	$ cd ..
-	$ git clone --bare myrepo myrepo.git
+To create a bare repositiores, do the following:
 
-How to upload a repo:
+	docker exec -it git-server /bin/sh
+	cd repos && mkdir <REPO_NAME>.git && cd <REPO_NAME.git && git init --bare
 
-	From host:
-	$ mv myrepo.git ~/git-server/repos
-	From remote:
-	$ scp -r myrepo.git user@host:~/git-server/repos
+Once created, you'll now be able to clone the repository
+from your server:
 
-How clone a repository:
+	git clone ssh://git@<ip-docker-server>:2222/git-server/repos/myrepo.git
 
-	$ git clone ssh://git@<ip-docker-server>:2222/git-server/repos/myrepo.git
+## Raspberry Pi - Known issues
 
-### Arguments
+When pushing a repository to a Raspberry Pi, the below error can occur:
 
-* **Expose ports**: 22
-* **Volumes**:
- * */git-server/keys*: Volume to store the users public keys
- * */git-server/repos*: Volume to store the repositories
+	error: remote unpack failed: unable to create temporary object directory
 
-### SSH Keys
+To fix, simply run the below command inside the `repos` folder on the server:
 
-How generate a pair keys in client machine:
+	sudo chown -R pi .
 
-	$ ssh-keygen -t rsa
+This will fix permissions issues.
 
-How upload quickly a public key to host volume:
-
-	$ scp ~/.ssh/id_rsa.pub user@host:~/git-server/keys
-
-### Build Image
-
-How to make the image:
-
-	$ docker build -t git-server-docker .
-	
-### Docker-Compose
-
-You can edit docker-compose.yml and run this container with docker-compose:
-
-	$ docker-compose up -d
