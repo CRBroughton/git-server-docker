@@ -1,7 +1,6 @@
 version: '2'
 
 services:
-
   git-server:
     image: jkarlos/git-server-docker
     #build: .
@@ -12,4 +11,12 @@ services:
     volumes:
     - ~/git-server/keys:/git-server/keys
     - ~/git-server/repos:/git-server/repos
+  cgit-server:
+    image: emarcs/nginx-cgit
+    restart: always
+    container_name: cgit-server
+    ports:
+      - "8000:80"
+    volumes:
+      - ~/git-server/repos:/srv/git
 
