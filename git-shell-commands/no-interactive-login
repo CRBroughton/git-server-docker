@@ -9,7 +9,7 @@ printf '%s\n' 'folder and run the below command:'
 
 printf '\n'
 
-printf '%s\n' 'mkdir <DIR_NAME>.git && cd <DIR_NAME>.git && git init --bare'
+printf '%s\n' 'cd repos && mkdir <REPO_NAME>.git && cd <REPO_NAME.git && git init --bare'
 
 printf '\n'
 
