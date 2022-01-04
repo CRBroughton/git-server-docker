@@ -51,7 +51,7 @@ When pushing a repository to a Raspberry Pi, the below error can occur:
 
 	error: remote unpack failed: unable to create temporary object directory
 
-To fix, simply run the below command inside the `repos` folder on the server:
+To fix, simply run the below command inside the `repos` folder on the pi (not in the container):
 
 	sudo chown -R pi .
 
